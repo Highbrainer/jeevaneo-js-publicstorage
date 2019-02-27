@@ -1,46 +1,59 @@
 {
-  "name": "publicstorage",
-  "version": "0.0.1",
-  "description": "A utility class to expose a public (cross-domain) shared memory",
-  "main": "src/index.js",
-  "dependencies": {
-  },
-  "devDependencies": {
-    "browserify": ">=16",    
-    "cross-var": "1.1.0",
-    "node-minify": "3.6.0",
-    "@babel/cli": "7.2.3",
-    "@babel/core": "7.2.2",
-    "@babel/preset-env": "7.2.3",
-    "npm-run-all": "4.1.5",
-    "rimraf": "2.6.3",
-    "eslint": "5.12.1",
-    "babel-eslint": "10.0.1",
-    "jest": "23.6.0",
-    "nock": "10.0.6",
-    "ncp": "2.0.0"
-  },
-  "keywords": [
-    "cross-domain",
-    "xdomain",
-    "shared",
-    "memory",
-    "storage",
-    "javascript"
-  ],
-  "author": "Jeevaneo",
-  "license": "ISC",
-  "scripts": {
-    
-    "clean": "cross-var rimraf dist/*$npm_package_version*",
-    "lint": "eslint --ext js src/**",
-    "test": "jest",
-    "coverage": "jest --collectCoverageFrom=src/**.js --coverage src",
-    "build-lib:es6-minimized": "cross-var node-minify --compressor uglify-es --input src/index.js --output dist/$npm_package_name-$npm_package_version.es6.min.js",
-    "build-lib:es6": "cross-var ncp src/index.js dist/$npm_package_name-$npm_package_version.es6.js",
-    "build-lib:es5-minimized": "cross-var babel src/index.js --out-file dist/$npm_package_name-$npm_package_version.es5.min.js --presets minify",
-    "build-lib:es5": "cross-var babel src/index.js --out-file dist/$npm_package_name-$npm_package_version.es5.js",
-    "build-lib:browserify": "cross-var browserify src/index.js > dist/$npm_package_name-$npm_package_version-bundle.js",
-    "build": "run-s clean build-lib:*"
-  }
+    "author": "Jeevaneo",
+    "dependencies": {},
+    "description": "A utility class to expose a public (cross-domain) shared memory",
+    "devDependencies": {
+        "babel-eslint": ">=10",
+        "browserify": ">=16",
+        "cross-var": "1.1.0",
+        "eslint": "5.12.1",
+        "jest": "23.6.0",
+	"mkdirp": ">=0",
+        "ncp": "2.0.0",
+        "nock": "10.0.6",
+        "node-minify": "3.6.0",
+        "npm-run-all": "4.1.5",
+        "rimraf": "2.6.3"
+    },
+    "eslintConfig": {
+        "env": {
+            "browser": true,
+            "es6": true,
+            "node": true
+        },
+        "extends": [
+            "eslint:recommended"
+        ],
+        "parser": "babel-eslint",
+        "rules": {
+            "allowEmptyReject": true,
+            "no-console": 0,
+            "prefer-promise-reject-errors": "off"
+        }
+    },
+    "keywords": [
+        "cross-domain",
+        "xdomain",
+        "shared",
+        "memory",
+        "storage",
+        "javascript"
+    ],
+    "license": "ISC",
+    "main": "src/index.js",
+    "name": "publicstorage",
+    "repository" : {
+        "type": "git",
+        "url": "https://github.com/Highbrainer/jeevaneo-js-publicstorage.git"
+    },
+    "scripts": {
+        "build": "run-s clean init build-lib:*",
+	"init": "mkdirp dist/",
+        "build-lib:browserify": "cross-var browserify --debug src/index.js > dist/$npm_package_name-$npm_package_version-bundle.js",
+        "clean": "cross-var rimraf dist/*$npm_package_version*",
+        "coverage": "jest --collectCoverageFrom=src/**.js --coverage src",
+        "lint": "eslint --ext js src/**",
+        "test": "jest"
+    },
+    "version": "0.0.2"
 }
