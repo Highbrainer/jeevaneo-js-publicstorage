@@ -1,35 +1,15 @@
 {
+    "name": "publicstorage",
+    "version": "0.0.5",
     "author": "Jeevaneo",
     "dependencies": {},
     "description": "A utility class to expose a public (cross-domain) shared memory",
     "devDependencies": {
-        "babel-eslint": ">=10",
         "browserify": ">=16",
         "cross-var": "1.1.0",
-        "eslint": "5.12.1",
-        "jest": "23.6.0",
-	"mkdirp": ">=0",
-        "ncp": "2.0.0",
-        "nock": "10.0.6",
-        "node-minify": "3.6.0",
-        "npm-run-all": "4.1.5",
-        "rimraf": "2.6.3"
-    },
-    "eslintConfig": {
-        "env": {
-            "browser": true,
-            "es6": true,
-            "node": true
-        },
-        "extends": [
-            "eslint:recommended"
-        ],
-        "parser": "babel-eslint",
-        "rules": {
-            "allowEmptyReject": true,
-            "no-console": 0,
-            "prefer-promise-reject-errors": "off"
-        }
+        "mkdirp": ">=0",
+        "rimraf": "2.6.3",
+        "npm-run-all": "4"
     },
     "keywords": [
         "cross-domain",
@@ -41,19 +21,14 @@
     ],
     "license": "ISC",
     "main": "src/index.js",
-    "name": "publicstorage",
-    "repository" : {
+    "repository": {
         "type": "git",
         "url": "https://github.com/Highbrainer/jeevaneo-js-publicstorage.git"
     },
     "scripts": {
         "build": "run-s clean init build-lib:*",
-	"init": "mkdirp dist/",
+        "init": "mkdirp dist/",
         "build-lib:browserify": "cross-var browserify --debug src/index.js > dist/$npm_package_name-$npm_package_version-bundle.js",
-        "clean": "cross-var rimraf dist/*",
-        "coverage": "jest --collectCoverageFrom=src/**.js --coverage src",
-        "lint": "eslint --ext js src/**",
-        "test": "jest"
-    },
-    "version": "0.0.3"
+        "clean": "cross-var rimraf dist/*"
+    }
 }
