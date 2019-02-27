@@ -1,8 +1,7 @@
 class PublicStorage {
 
 	 constructor () {
-// const IFRAME_ROOT_URL = "http://localhost:8080/httpd/cache/iframe2.html";
-		 this.IFRAME_ROOT_URL = "http://sl900311.maif.local:6084/shared-memory/shared-iframe.html";
+		 this.IFRAME_ROOT_URL = "https://publicstorage.neocities.org/shared-iframe.html";
 	 }
 
 	 uniqueId(){
@@ -48,16 +47,11 @@ class PublicStorage {
 		    });
 			that.iframe = document.createElement("iframe");
 			that.iframe.id=that.uniqueId();
-// that.iframe.src="http://localhost:9999/iframe.html" + "?action=" +
-// "fetchAllApplications";
-// that.iframe.src="http://sl900311.maif.local:6084/iframe.html";
 			that.iframe.src=that.IFRAME_ROOT_URL + "?uid="+that.iframe.id;
 			that.iframe.style="display:none;";
 			that.body = document.getElementsByTagName("body")[0]; 
 			that.body.appendChild(that.iframe);
 
-// console.log("J'envoie une request...");
-// that.iframe.contentWindow.postMessage('fetchAllApplications', '*');
 			setTimeout(()=>reject("TIMEOUTED!"), 20000);
 		});
 	}

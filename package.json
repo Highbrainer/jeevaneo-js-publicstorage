@@ -50,10 +50,10 @@
         "build": "run-s clean init build-lib:*",
 	"init": "mkdirp dist/",
         "build-lib:browserify": "cross-var browserify --debug src/index.js > dist/$npm_package_name-$npm_package_version-bundle.js",
-        "clean": "cross-var rimraf dist/*$npm_package_version*",
+        "clean": "cross-var rimraf dist/*",
         "coverage": "jest --collectCoverageFrom=src/**.js --coverage src",
         "lint": "eslint --ext js src/**",
         "test": "jest"
     },
-    "version": "0.0.2"
+    "version": "0.0.3"
 }
