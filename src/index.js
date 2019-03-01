@@ -1,4 +1,4 @@
-class PublicStorageAccess {
+export class PublicStorageAccess {
 
 	 constructor () {
 		 this.IFRAME_ROOT_URL = "https://publicstorage.neocities.org/shared-iframe.html";
@@ -138,19 +138,24 @@ class PublicStorage {
 
 }
 
-const publicstorage = new PublicStorage();
+export const publicstorage = new PublicStorage();
 
-function onLoadThen() {
+export default function onLoadThen() {
 	return new Promise(function(resolve, reject) {
-		window.addEventListener('load', function unregisterme() {
-			resolve(publicstorage);
-			if (window) {
+		if (window) {
+			if(document.getElementsByTagName('BODY')[0]) {
+				resolve(publicstorage);
 				window.publicstorage = publicstorage;
+			} else {				
+				window.addEventListener('load', function unregisterme() {
+					resolve(publicstorage);
+					window.publicstorage = publicstorage;
+					window.removeEventListener('load', unregisterme);
+				});
 			}
-			window.removeEventListener('load', unregisterme);
-		});
+		}
 		setTimeout(function() {reject(new Error("Timeout waiting for onLoad!"));}, 10000);
 	});
 }
 
-module.exports = onLoadThen();
+//module.exports = onLoadThen();
