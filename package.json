@@ -2,6 +2,7 @@
 	"name": "publicstorage",
 	"version": "0.0.8-0",
 	"author": "Jeevaneo",
+	"scope" : "jeevaneo",
 	"dependencies": {},
 	"description": "A utility class to expose a public (cross-domain) shared memory",
 	"devDependencies": {
