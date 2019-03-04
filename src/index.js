@@ -116,13 +116,6 @@ class PublicStorageAccess {
 
 class PublicStorage { 
 	
-	constructor({debug=false}={}) {
-		 if(debug) {
-			 onLoadThen().then(function(){
-				 this.__createDebugIFrame();				 
-			 });
-		 }		
-	}
 	 
 	__createDebugIFrame() {
 		 var iframe = document.createElement("iframe");
@@ -130,6 +123,14 @@ class PublicStorage {
 		 iframe.src=that.IFRAME_ROOT_URL + "?for-debug-only";
 		 iframe.style="display:none;";
 		 document.getElementsByTagName("body")[0].appendChild(iframe);
+	}
+	
+	constructor({debug=false}={}) {
+		if(debug) {
+			onLoadThen().then(function(){
+				this.__createDebugIFrame();				 
+			});
+		}		
 	}
 	 
 	sessionGet(prop) {
