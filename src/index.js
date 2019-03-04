@@ -158,12 +158,10 @@ function onLoadThen() {
 	return new Promise(function(resolve, reject) {
 		if (window) {
 			if(document.getElementsByTagName('BODY')[0]) {
-				resolve(publicstorage);
-				window.publicstorage = publicstorage;
+				resolve();
 			} else {				
 				window.addEventListener('load', function unregisterme() {
-					resolve(publicstorage);
-					window.publicstorage = publicstorage;
+					resolve();
 					window.removeEventListener('load', unregisterme);
 				});
 			}
@@ -171,6 +169,10 @@ function onLoadThen() {
 		setTimeout(function() {reject(new Error("Timeout waiting for onLoad!"));}, 10000);
 	});
 }
+
+onLoadThen().then(function() {
+	window.publicstorage = publicstorage;
+}).catch(e=>console.error(e));
 
 export {onLoadThen, PublicStorage, publicstorage as default}
 // module.exports = onLoadThen();
