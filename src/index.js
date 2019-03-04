@@ -1,21 +1,8 @@
-export class PublicStorageAccess {
+class PublicStorageAccess {
 
-	 constructor ({debug=false}={}) {
+	 constructor () {
 		 this.IFRAME_ROOT_URL = "https://publicstorage.neocities.org/shared-iframe.html";
 		 this.uid = this.uniqueId();
-		 if(debug) {
-			 onLoadThen().then(function(){
-				 this.__createDebugIFrame();				 
-			 });
-		 }
-	 }
-	 
-	 __createDebugIFrame() {
-		 var iframe = document.createElement("iframe");
-		 iframe.id=that.uid;
-		 iframe.src=that.IFRAME_ROOT_URL + "?for-debug-only";
-		 iframe.style="display:none;";
-		 document.getElementsByTagName("body")[0].appendChild(iframe);
 	 }
 	 
 	uniqueId() {
@@ -63,7 +50,7 @@ export class PublicStorageAccess {
 				window.removeEventListener('message', mafunc);
 				// that.body.removeChild(that.iframe);
 		    });
-			document.getElementsByTagName("body")[0].appendChild(iframe);
+			onLoadThen(() => document.getElementsByTagName("body")[0].appendChild(iframe));
 
 			setTimeout(()=>reject(`Request ${that.uid} TIMEOUTED!`), 20000);
 		});
@@ -128,32 +115,46 @@ export class PublicStorageAccess {
 }
 
 class PublicStorage { 
-
- sessionGet(prop) {
-	 return new PublicStorageAccess().access("get", prop, null, "session");
- }
- sessionSet(prop, value) {
-	 return new PublicStorageAccess().access("set", prop, value, "session");
- }
- localGet(prop) {
-	 return new PublicStorageAccess().access("get", prop, null, "local");
- }
- localSet(prop, value) {
-	 return new PublicStorageAccess().access("set", prop, value, "local");
- }
- get(prop) {
-	 return this.localGet(prop);
- }
- set(prop, value) {
-	 return this.localSet(prop, value); 
- }
-
-
+	
+	constructor({debug=false}={}) {
+		 if(debug) {
+			 onLoadThen().then(function(){
+				 this.__createDebugIFrame();				 
+			 });
+		 }		
+	}
+	 
+	__createDebugIFrame() {
+		 var iframe = document.createElement("iframe");
+		 iframe.id=that.uid;
+		 iframe.src=that.IFRAME_ROOT_URL + "?for-debug-only";
+		 iframe.style="display:none;";
+		 document.getElementsByTagName("body")[0].appendChild(iframe);
+	}
+	 
+	sessionGet(prop) {
+		 return new PublicStorageAccess().access("get", prop, null, "session");
+	}
+	sessionSet(prop, value) {
+		 return new PublicStorageAccess().access("set", prop, value, "session");
+	}
+	localGet(prop) {
+		 return new PublicStorageAccess().access("get", prop, null, "local");
+	}
+	localSet(prop, value) {
+		 return new PublicStorageAccess().access("set", prop, value, "local");
+	}
+	get(prop) {
+		 return this.localGet(prop);
+	}
+	set(prop, value) {
+		 return this.localSet(prop, value);
+	}
 }
 
-export const publicstorage = new PublicStorage();
+const publicstorage = new PublicStorage();
 
-export default function onLoadThen() {
+function onLoadThen() {
 	return new Promise(function(resolve, reject) {
 		if (window) {
 			if(document.getElementsByTagName('BODY')[0]) {
@@ -171,4 +172,5 @@ export default function onLoadThen() {
 	});
 }
 
+export {onLoadThen, PublicStorage, publicstorage as default}
 // module.exports = onLoadThen();
