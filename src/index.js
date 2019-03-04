@@ -1,8 +1,21 @@
 export class PublicStorageAccess {
 
-	 constructor () {
+	 constructor ({debug=false}={}) {
 		 this.IFRAME_ROOT_URL = "https://publicstorage.neocities.org/shared-iframe.html";
 		 this.uid = this.uniqueId();
+		 if(debug) {
+			 onLoadThen().then(function(){
+				 this.__createDebugIFrame();				 
+			 });
+		 }
+	 }
+	 
+	 __createDebugIFrame() {
+		 var iframe = document.createElement("iframe");
+		 iframe.id=that.uid;
+		 iframe.src=that.IFRAME_ROOT_URL + "?for-debug-only";
+		 iframe.style="display:none;";
+		 document.getElementsByTagName("body")[0].appendChild(iframe);
 	 }
 	 
 	uniqueId() {
@@ -97,7 +110,7 @@ export class PublicStorageAccess {
 						} catch (e) {
 							reject(tkn.data);
 						}
-						//that.body = document.getElementsByTagName("body")[0];
+						// that.body = document.getElementsByTagName("body")[0];
 						iframe.parentNode.removeChild(iframe);
 						window.removeEventListener('message', mafunc);
 				    });
@@ -158,4 +171,4 @@ export default function onLoadThen() {
 	});
 }
 
-//module.exports = onLoadThen();
+// module.exports = onLoadThen();
