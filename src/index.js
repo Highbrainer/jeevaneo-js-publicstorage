@@ -1,7 +1,8 @@
+const IFRAME_ROOT_URL = "https://publicstorage.neocities.org/shared-iframe.html";
+
 class PublicStorageAccess {
 
 	 constructor () {
-		 this.IFRAME_ROOT_URL = "https://publicstorage.neocities.org/shared-iframe.html";
 		 this.uid = this.uniqueId();
 	 }
 	 
@@ -20,7 +21,7 @@ class PublicStorageAccess {
 		var that = this;
 		var iframe = document.createElement("iframe");
 		iframe.id=that.uid;
-		iframe.src=that.IFRAME_ROOT_URL + "?uid=init-"+that.uid;
+		iframe.src=IFRAME_ROOT_URL + "?uid=init-"+that.uid;
 		iframe.style="display:none;";
 		return new Promise(function(resolve, reject) {
 			console.debug("Je démarre...");
@@ -28,7 +29,7 @@ class PublicStorageAccess {
 				
 				console.debug("prepareIFrame " + that.uid + " reçoit un message... " + tkn.data);
 				
-				if (that.IFRAME_ROOT_URL.indexOf(tkn.origin)<0) {
+				if (IFRAME_ROOT_URL.indexOf(tkn.origin)<0) {
 					return;
 				}
 				
@@ -75,7 +76,7 @@ class PublicStorageAccess {
 			var promise = new Promise(function(resolve, reject) {
 				that.prepareIFrame().then(iframe => {
 					window.addEventListener('message', function mafunc(tkn) {
-						if (that.IFRAME_ROOT_URL.indexOf(tkn.origin)<0) {
+						if (IFRAME_ROOT_URL.indexOf(tkn.origin)<0) {
 							return;
 						}
 						try {
@@ -115,20 +116,19 @@ class PublicStorageAccess {
 }
 
 function __createDebugIFrame() {
-	var iframe = document.createElement("iframe");
-	iframe.id=that.uid;
-	iframe.src=that.IFRAME_ROOT_URL + "?for-debug-only";
-	iframe.style="display:none;";
-	document.getElementsByTagName("body")[0].appendChild(iframe);
+	onLoadThen().then(function(){
+		var iframe = document.createElement("iframe");
+		iframe.src=IFRAME_ROOT_URL + "?for-debug-only";
+		iframe.style="display:none;";
+		document.getElementsByTagName("body")[0].appendChild(iframe);
+	});
 }
 
 class PublicStorage { 
 	
 	constructor({debug=false}={}) {
 		if(debug) {
-			onLoadThen().then(function(){
 				__createDebugIFrame();				 
-			});
 		}		
 	}
 	 
