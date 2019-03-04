@@ -51,7 +51,7 @@ class PublicStorageAccess {
 				window.removeEventListener('message', mafunc);
 				// that.body.removeChild(that.iframe);
 		    });
-			onLoadThen(() => {
+			onLoadThen().then(() => {
 				console.debug("Adding the iframe for " + that.uid);
 				document.getElementsByTagName("body")[0].appendChild(iframe);
 			});
