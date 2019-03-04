@@ -114,21 +114,20 @@ class PublicStorageAccess {
 	
 }
 
+function __createDebugIFrame() {
+	var iframe = document.createElement("iframe");
+	iframe.id=that.uid;
+	iframe.src=that.IFRAME_ROOT_URL + "?for-debug-only";
+	iframe.style="display:none;";
+	document.getElementsByTagName("body")[0].appendChild(iframe);
+}
+
 class PublicStorage { 
-	
-	 
-	__createDebugIFrame() {
-		 var iframe = document.createElement("iframe");
-		 iframe.id=that.uid;
-		 iframe.src=that.IFRAME_ROOT_URL + "?for-debug-only";
-		 iframe.style="display:none;";
-		 document.getElementsByTagName("body")[0].appendChild(iframe);
-	}
 	
 	constructor({debug=false}={}) {
 		if(debug) {
 			onLoadThen().then(function(){
-				this.__createDebugIFrame();				 
+				__createDebugIFrame();				 
 			});
 		}		
 	}
