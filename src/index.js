@@ -51,7 +51,10 @@ class PublicStorageAccess {
 				window.removeEventListener('message', mafunc);
 				// that.body.removeChild(that.iframe);
 		    });
-			onLoadThen(() => document.getElementsByTagName("body")[0].appendChild(iframe));
+			onLoadThen(() => {
+				console.debug("Adding the iframe for " + that.uid);
+				document.getElementsByTagName("body")[0].appendChild(iframe);
+			});
 
 			setTimeout(()=>reject(`Request ${that.uid} TIMEOUTED!`), 20000);
 		});
