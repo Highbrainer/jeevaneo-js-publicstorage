@@ -141,17 +141,26 @@ class PublicStorage {
 	sessionSet(prop, value) {
 		 return new PublicStorageAccess().access("set", prop, value, "session");
 	}
+	sessionUnset(prop, value) {
+		 return new PublicStorageAccess().access("delete", prop, null, "session");
+	}
 	localGet(prop) {
 		 return new PublicStorageAccess().access("get", prop, null, "local");
 	}
 	localSet(prop, value) {
 		 return new PublicStorageAccess().access("set", prop, value, "local");
 	}
+	localUnset(prop) {
+		 return new PublicStorageAccess().access("delete", prop, null, "local");
+	}
 	get(prop) {
 		 return this.localGet(prop);
 	}
 	set(prop, value) {
 		 return this.localSet(prop, value);
+	}
+	unset(prop) {
+		return this.localUnset(prop);
 	}
 }
 
