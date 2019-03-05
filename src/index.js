@@ -120,6 +120,7 @@ class PublicStorageAccess {
 
 function __createDebugIFrame() {
 	onLoadThen().then(function(){
+		console.log("Création de l'iframe de debug...");
 		const iframe = document.createElement("iframe");
 		iframe.src=IFRAME_ROOT_URL + "?for-debug-only";
 		iframe.style="display:none;";
