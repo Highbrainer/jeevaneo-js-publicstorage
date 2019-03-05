@@ -18,8 +18,8 @@ class PublicStorageAccess {
 	}
 
 	 prepareIFrame() {
-		var that = this;
-		var iframe = document.createElement("iframe");
+		const that = this;
+		const iframe = document.createElement("iframe");
 		iframe.id=that.uid;
 		iframe.src=IFRAME_ROOT_URL + "?uid=init-"+that.uid;
 		iframe.style="display:none;";
@@ -34,7 +34,7 @@ class PublicStorageAccess {
 				}
 				
 				try {
-					var packet = JSON.parse(tkn.data);
+					const packet = JSON.parse(tkn.data);
 					
 					if(!(packet.frameId === "init-" + that.uid)) {
 						// ignore
@@ -74,9 +74,9 @@ class PublicStorageAccess {
 				throw new Error("level can only be 'session' or 'local' - not '" + access + "'");
 			}
 				
-			var that = this;
+			const that = this;
 			
-			var promise = new Promise(function(resolve, reject) {
+			const promise = new Promise(function(resolve, reject) {
 				that.prepareIFrame().then(iframe => {
 					window.addEventListener('message', function mafunc(tkn) {
 						if (IFRAME_ROOT_URL.indexOf(tkn.origin)<0) {
@@ -107,7 +107,7 @@ class PublicStorageAccess {
 				    });
 			
 					console.debug("On envoit une request... frameId: init-" + that.uid + "\trequestId: " + that.uid);
-					var request = {uid:that.uid, access:access, prop:prop, value:value, level:level};
+					const request = {uid:that.uid, access:access, prop:prop, value:value, level:level};
 					console.debug(request);
 					iframe.contentWindow.postMessage(JSON.stringify(request), '*');
 					setTimeout(()=>reject("TIMEOUTED!"), 20000);
@@ -120,7 +120,7 @@ class PublicStorageAccess {
 
 function __createDebugIFrame() {
 	onLoadThen().then(function(){
-		var iframe = document.createElement("iframe");
+		const iframe = document.createElement("iframe");
 		iframe.src=IFRAME_ROOT_URL + "?for-debug-only";
 		iframe.style="display:none;";
 		document.getElementsByTagName("body")[0].appendChild(iframe);
