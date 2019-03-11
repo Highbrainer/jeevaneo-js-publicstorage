@@ -2,8 +2,9 @@ const IFRAME_ROOT_URL = "https://publicstorage.neocities.org/shared-iframe.html"
 
 class PublicStorageAccess {
 
-	 constructor () {
+	 constructor ({debug=false}={}) {
 		 this.uid = this.uniqueId();
+		 this.debug=debug;
 	 }
 	 
 	uniqueId() {
@@ -17,6 +18,12 @@ class PublicStorageAccess {
 				'-' + chr4() + chr4() + chr4();
 	}
 
+	_debug(msg) {
+		if(this.debug) {
+			console.debug(msg);
+		}
+	}
+	
 	 prepareIFrame() {
 		const that = this;
 		const iframe = document.createElement("iframe");
@@ -24,10 +31,9 @@ class PublicStorageAccess {
 		iframe.src=IFRAME_ROOT_URL + "?uid=init-"+that.uid;
 		iframe.style="display:none;";
 		return new Promise(function(resolve, reject) {
-			console.debug("Je démarre...");
 			window.addEventListener('message', function mafunc(tkn) {
 				
-				console.debug("prepareIFrame " + that.uid + " reçoit un message... " + tkn.data);
+				//that._debug("prepareIFrame " + that.uid + " reçoit un message... " + tkn.data);
 				
 				if (IFRAME_ROOT_URL.indexOf(tkn.origin)<0) {
 					return;
@@ -41,7 +47,7 @@ class PublicStorageAccess {
 						return;
 					}
 					
-					console.debug("prepareIFrame " + that.uid + " accepte un message... " + tkn.data);
+					//debug("prepareIFrame " + that.uid + " accepte un message... " + tkn.data);
 					if(packet.ready) {
 						resolve(iframe);					
 					}
@@ -52,7 +58,7 @@ class PublicStorageAccess {
 				// that.body.removeChild(that.iframe);
 		    });
 			onLoadThen().then(() => {
-				console.debug("Adding the iframe for " + that.uid);
+				//that._debug("Adding the iframe for " + that.uid);
 				document.getElementsByTagName("body")[0].appendChild(iframe);
 			});
 
@@ -94,7 +100,7 @@ class PublicStorageAccess {
 		// // ignore
 		// return;
 		// }
-							console.debug("Access " + that.uid + " reçoit un message... " + tkn.data);
+							//that._debug("Access " + that.uid + " reçoit un message... " + tkn.data);
 							resolve(packet.body);
 			
 							console.debug("Je résouds!");
@@ -106,9 +112,9 @@ class PublicStorageAccess {
 						window.removeEventListener('message', mafunc);
 				    });
 			
-					console.debug("On envoit une request... frameId: init-" + that.uid + "\trequestId: " + that.uid);
+					//that._debug("On envoit une request... frameId: init-" + that.uid + "\trequestId: " + that.uid);
 					const request = {uid:that.uid, access:access, prop:prop, value:value, level:level};
-					console.debug(request);
+					//that._debug(request);
 					iframe.contentWindow.postMessage(JSON.stringify(request), '*');
 					setTimeout(()=>reject("TIMEOUTED!"), 20000);
 				});
@@ -120,7 +126,7 @@ class PublicStorageAccess {
 
 function __createDebugIFrame() {
 	onLoadThen().then(function(){
-		console.log("Création de l'iframe de debug...");
+		console.debug("Creating an iframe for debugging...");
 		const iframe = document.createElement("iframe");
 		iframe.src=IFRAME_ROOT_URL + "?for-debug-only";
 		iframe.style="display:none;";
