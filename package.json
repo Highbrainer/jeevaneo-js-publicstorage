@@ -7,6 +7,7 @@
 	"description": "A utility class to expose a public (cross-domain) shared memory",
 	"devDependencies": {
 		"@babel/core": ">=7.3.4",
+		"@babel/preset-env": "^7.3.4",
 		"babel-preset-env": ">=7.0.0-beta",
 		"babelify": ">=10",
 		"browserify": ">=16",
@@ -24,30 +25,21 @@
 		"javascript"
 	],
 	"license": "ISC",
-	"main": "src/index.js",
+	"main": "dist/index.js",
+	"module": "src/indeX.js",
+	"browser": "dist/bundle.js",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/Highbrainer/jeevaneo-js-publicstorage.git"
 	},
 	"scripts": {
-		"build": "run-s clean init build-lib:*",
+		"build": "run-s clean init es5 build-lib:*",
+		"es5": "babel src -d dist",
 		"init": "mkdirp dist/",
-		"build-lib:browserify": "browserify --debug src/index.js > dist/bundle.js",
+		"build-lib:browserify": "browserify --debug dist/index.js > dist/bundle.js",
 		"clean": "rimraf dist/*",
 		"prepublishOnly": "eslint --ext js src/**",
 		"snapshot": "npm install && npm run build && git add dist ; git add package*.json ; git commit -m 'snapshot/publish' ; npm publish && npm version prerelease && git push --follow-tags",
 		"release": "npm install && npm run build && git add dist ; git add package*.json ; git commit -m 'release/publish' ; npm version patch && npm publish && npm version prerelease && git push --follow-tags"
-	},
-	"browserify": {
-		"transform": [
-			[
-				"babelify",
-				{
-					"presets": [
-						"env"
-					]
-				}
-			]
-		]
 	}
 }
