@@ -35,8 +35,8 @@
 		"build-lib:browserify": "browserify --debug src/index.js > dist/bundle.js",
 		"clean": "rimraf dist/*",
 		"prepublishOnly": "eslint --ext js src/**",
-		"snapshot": "npm install && npm run build && git add dist ; git add package.json ; git commit -m 'snapshot/publish' ; npm publish && npm version prerelease && git push --follow-tags",
-		"release": "npm install && npm run build && git add dist ; git add package.json ; git commit -m 'release/publish' ; npm version patch && npm publish && npm version prerelease && git push --follow-tags"
+		"snapshot": "npm install && npm run build && git add dist ; git add package*.json ; git commit -m 'snapshot/publish' ; npm publish && npm version prerelease && git push --follow-tags",
+		"release": "npm install && npm run build && git add dist ; git add package*.json ; git commit -m 'release/publish' ; npm version patch && npm publish && npm version prerelease && git push --follow-tags"
 	},
 	"browserify": {
 		"transform": [
