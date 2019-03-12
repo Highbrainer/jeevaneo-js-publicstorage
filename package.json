@@ -35,7 +35,9 @@
 		"init": "mkdirp dist/",
 		"build-lib:browserify": "cross-var browserify --debug src/index.js > dist/$npm_package_name-$npm_package_version-bundle.js",
 		"clean": "cross-var rimraf dist/*",
-		"prepublishOnly": "eslint --ext js src/**"
+		"prepublishOnly": "eslint --ext js src/**",
+		"snapshot": "npm install && npm run browserify && git add dist ; git add package.json ; git commit -m 'snapshot/publish' ; npm publish && npm version prerelease && git push --follow-tags",
+		"release": "npm install && npm run browserify && git add dist ; git add package.json ; git commit -m 'release/publish' ; npm version patch && npm publish && npm version prerelease && git push --follow-tags"
 	},
 	"browserify": {
 		"transform": [
