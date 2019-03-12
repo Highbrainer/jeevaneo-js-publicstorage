@@ -10,7 +10,6 @@
 		"babel-preset-env": ">=7.0.0-beta",
 		"babelify": ">=10",
 		"browserify": ">=16",
-		"cross-var": "1.1.0",
 		"eslint": "^5.15.1",
 		"mkdirp": ">=0",
 		"npm-run-all": "4",
@@ -25,7 +24,7 @@
 		"javascript"
 	],
 	"license": "ISC",
-	"main": "src/index.js",
+	"main": "dist/bundle.js",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/Highbrainer/jeevaneo-js-publicstorage.git"
@@ -33,8 +32,8 @@
 	"scripts": {
 		"build": "run-s clean init build-lib:*",
 		"init": "mkdirp dist/",
-		"build-lib:browserify": "cross-var browserify --debug src/index.js > dist/$npm_package_name-$npm_package_version-bundle.js",
-		"clean": "cross-var rimraf dist/*",
+		"build-lib:browserify": "browserify --debug src/index.js > dist/bundle.js",
+		"clean": "rimraf dist/*",
 		"prepublishOnly": "eslint --ext js src/**",
 		"snapshot": "npm install && npm run build && git add dist ; git add package.json ; git commit -m 'snapshot/publish' ; npm publish && npm version prerelease && git push --follow-tags",
 		"release": "npm install && npm run build && git add dist ; git add package.json ; git commit -m 'release/publish' ; npm version patch && npm publish && npm version prerelease && git push --follow-tags"
