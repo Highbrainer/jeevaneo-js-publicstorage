@@ -148,7 +148,7 @@ class PublicStorage {
 	sessionSet(prop, value) {
 		 return new PublicStorageAccess().access("set", prop, value, "session");
 	}
-	sessionUnset(prop, value) {
+	sessionUnset(prop) {
 		 return new PublicStorageAccess().access("delete", prop, null, "session");
 	}
 	localGet(prop) {

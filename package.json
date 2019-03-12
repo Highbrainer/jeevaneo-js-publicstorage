@@ -6,14 +6,15 @@
 	"dependencies": {},
 	"description": "A utility class to expose a public (cross-domain) shared memory",
 	"devDependencies": {
-		"browserify": ">=16",
 		"@babel/core": ">=7.3.4",
 		"babel-preset-env": ">=7.0.0-beta",
 		"babelify": ">=10",
+		"browserify": ">=16",
 		"cross-var": "1.1.0",
+		"eslint": "^5.15.1",
 		"mkdirp": ">=0",
-		"rimraf": "2.6.3",
-		"npm-run-all": "4"
+		"npm-run-all": "4",
+		"rimraf": "2.6.3"
 	},
 	"keywords": [
 		"cross-domain",
@@ -33,7 +34,8 @@
 		"build": "run-s clean init build-lib:*",
 		"init": "mkdirp dist/",
 		"build-lib:browserify": "cross-var browserify --debug src/index.js > dist/$npm_package_name-$npm_package_version-bundle.js",
-		"clean": "cross-var rimraf dist/*"
+		"clean": "cross-var rimraf dist/*",
+		"prepublishOnly": "eslint --ext js src/**"
 	},
 	"browserify": {
 		"transform": [
