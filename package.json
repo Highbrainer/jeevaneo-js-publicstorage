@@ -25,9 +25,7 @@
 		"javascript"
 	],
 	"license": "ISC",
-	"main": "dist/index.js",
-	"module": "src/indeX.js",
-	"browser": "dist/bundle.js",
+	"main": "dist/bundle.js",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/Highbrainer/jeevaneo-js-publicstorage.git"
