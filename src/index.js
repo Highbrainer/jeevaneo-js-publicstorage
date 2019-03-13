@@ -20,7 +20,9 @@ class PublicStorageAccess {
 
 	_debug(msg) {
 		if(this.debug) {
-			console.debug(msg);
+			if(console &&& console.debug) {
+				console.debug(msg);
+			}
 		}
 	}
 	
@@ -95,15 +97,8 @@ class PublicStorageAccess {
 								// ignore
 								return;
 							}
-//							
-		// if(!packet.body) {
-		// // ignore
-		// return;
-		// }
 							//that._debug("Access " + that.uid + " reçoit un message... " + tkn.data);
 							resolve(packet.body);
-			
-							console.debug("Je résouds!");
 						} catch (e) {
 							reject(tkn.data);
 						}
@@ -126,7 +121,7 @@ class PublicStorageAccess {
 
 function __createDebugIFrame() {
 	onLoadThen().then(function(){
-		console.debug("Creating an iframe for debugging...");
+		// console.debug("Creating an iframe for debugging...");
 		const iframe = document.createElement("iframe");
 		iframe.src=IFRAME_ROOT_URL + "?for-debug-only";
 		iframe.style="display:none;";
@@ -191,7 +186,11 @@ function onLoadThen() {
 
 onLoadThen().then(function() {
 	window.publicstorage = publicstorage;
-}).catch(e=>console.error(e));
+}).catch(e=> {
+	if (console && console.error) {
+		console.error(e);
+	}
+});
 
 export {onLoadThen, PublicStorage, publicstorage as default}
 // module.exports = onLoadThen();
