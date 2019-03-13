@@ -20,7 +20,7 @@ class PublicStorageAccess {
 
 	_debug(msg) {
 		if(this.debug) {
-			if(console &&& console.debug) {
+			if(console && console.debug) {
 				console.debug(msg);
 			}
 		}
