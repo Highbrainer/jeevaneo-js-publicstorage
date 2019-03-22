@@ -35,8 +35,6 @@ class PublicStorageAccess {
 		return new Promise(function(resolve, reject) {
 			window.addEventListener('message', function mafunc(tkn) {
 				
-				//that._debug("prepareIFrame " + that.uid + " reçoit un message... " + tkn.data);
-				
 				if (IFRAME_ROOT_URL.indexOf(tkn.origin)<0) {
 					return;
 				}
@@ -49,7 +47,6 @@ class PublicStorageAccess {
 						return;
 					}
 					
-					//debug("prepareIFrame " + that.uid + " accepte un message... " + tkn.data);
 					if(packet.ready) {
 						resolve(iframe);					
 					}
@@ -57,10 +54,8 @@ class PublicStorageAccess {
 					reject(tkn.data);
 				}
 				window.removeEventListener('message', mafunc);
-				// that.body.removeChild(that.iframe);
 		    });
 			onLoadThen().then(() => {
-				//that._debug("Adding the iframe for " + that.uid);
 				document.getElementsByTagName("body")[0].appendChild(iframe);
 			});
 
@@ -97,19 +92,15 @@ class PublicStorageAccess {
 								// ignore
 								return;
 							}
-							//that._debug("Access " + that.uid + " reçoit un message... " + tkn.data);
 							resolve(packet.body);
 						} catch (e) {
 							reject(tkn.data);
 						}
-						// that.body = document.getElementsByTagName("body")[0];
 						iframe.parentNode.removeChild(iframe);
 						window.removeEventListener('message', mafunc);
 				    });
 			
-					//that._debug("On envoit une request... frameId: init-" + that.uid + "\trequestId: " + that.uid);
 					const request = {uid:that.uid, access:access, prop:prop, value:value, level:level};
-					//that._debug(request);
 					iframe.contentWindow.postMessage(JSON.stringify(request), '*');
 					setTimeout(()=>reject("TIMEOUTED!"), 20000);
 				});
@@ -121,7 +112,6 @@ class PublicStorageAccess {
 
 function __createDebugIFrame() {
 	onLoadThen().then(function(){
-		// console.debug("Creating an iframe for debugging...");
 		const iframe = document.createElement("iframe");
 		iframe.src=IFRAME_ROOT_URL + "?for-debug-only";
 		iframe.style="display:none;";
@@ -174,7 +164,7 @@ function onLoadThen() {
 			if(document.getElementsByTagName('BODY')[0]) {
 				resolve();
 			} else {				
-				window.addEventListener('load', function unregisterme() {
+				registerOnLoad(function unregisterme() {
 					resolve();
 					window.removeEventListener('load', unregisterme);
 				});
@@ -182,6 +172,14 @@ function onLoadThen() {
 		}
 		setTimeout(function() {reject(new Error("Timeout waiting for onLoad!"));}, 10000);
 	});
+}
+
+function registerOnLoad(lambda) {
+	if (window.addEventListener) {
+		  window.addEventListener('load', lambda);
+	} else if (window.attachEvent) {
+		  window.attachEvent('onload', lambda);
+	}
 }
 
 onLoadThen().then(function() {
