@@ -31,7 +31,7 @@ class PublicStorageAccess {
 		const iframe = document.createElement("iframe");
 		iframe.id=that.uid;
 		iframe.src=IFRAME_ROOT_URL + "?uid=init-"+that.uid;
-		iframe.styleText"display:none;";
+		iframe.style.cssText="display:none;";
 		return new Promise(function(resolve, reject) {
 			window.addEventListener('message', function mafunc(tkn) {
 				
