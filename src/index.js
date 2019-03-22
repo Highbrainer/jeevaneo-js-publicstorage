@@ -31,7 +31,7 @@ class PublicStorageAccess {
 		const iframe = document.createElement("iframe");
 		iframe.id=that.uid;
 		iframe.src=IFRAME_ROOT_URL + "?uid=init-"+that.uid;
-		iframe.style="display:none;";
+		iframe.styleText"display:none;";
 		return new Promise(function(resolve, reject) {
 			window.addEventListener('message', function mafunc(tkn) {
 				
@@ -114,7 +114,7 @@ function __createDebugIFrame() {
 	onLoadThen().then(function(){
 		const iframe = document.createElement("iframe");
 		iframe.src=IFRAME_ROOT_URL + "?for-debug-only";
-		iframe.style="display:none;";
+		iframe.style.cssText="display:none;";
 		document.getElementsByTagName("body")[0].appendChild(iframe);
 	});
 }
