@@ -3,11 +3,14 @@
 	"version": "0.0.14-4",
 	"author": "Jeevaneo",
 	"scope": "jeevaneo",
-	"dependencies": {},
+	"dependencies": {
+		"@babel/runtime-corejs2": "^7.4.0"
+	},
 	"description": "A utility class to expose a public (cross-domain) shared memory",
 	"devDependencies": {
 		"@babel/core": "^7.3.4",
 		"@babel/preset-env": "^7.3.4",
+		"@babel/plugin-transform-runtime": "^7.4.0",
 		"browserify": "^16.2.3",
 		"eslint": "^5.15.1",
 		"mkdirp": "^0.5.1",
@@ -24,6 +27,7 @@
 	],
 	"license": "ISC",
 	"main": "dist/index.js",
+	"module": "src/index.js",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/Highbrainer/jeevaneo-js-publicstorage.git"
@@ -45,6 +49,15 @@
 				{
 					"targets": "> 0.25%, not dead",
 					"useBuiltIns": false
+				}
+			]
+		],
+		"plugins": [
+			[
+				"@babel/plugin-transform-runtime",
+				{
+					"regenerator": true,
+					"corejs": 2
 				}
 			]
 		]
