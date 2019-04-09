@@ -52,7 +52,5 @@ publicstoragePromise.then(publicstorage => {
 ### Security warning
     
 This implementation aims at *sharing* data between domains. This means there is no control on who reads or writes the data.
-<aside class="warning"> 
 **Do not use this means as-is with confidential or sensitive data!**
-</aside>
 In case you need to ensure only a controled set of domains can access the data, you will need to fork the code and modify the shared-iframe.html component.
